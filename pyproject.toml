@@ -1,0 +1,70 @@
+[build-system]
+# PEP 517/518: the build backend is declared here, not in setup.py.
+# hatchling is the backend used by the official Python Packaging tutorial.
+# (setuptools, flit-core and pdm-backend are equally valid choices.)
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+# PEP 621 metadata. This replaces everything that used to live in setup().
+# The name is normalized by PyPI (PEP 503): "hello_world.pypi" == "hello-world-pypi".
+# Check availability at https://pypi.org/project/<name>/ before your first upload.
+name = "hello-world-pypi"
+version = "0.1.0"
+description = "The simplest Hello World package, used to demonstrate publishing to PyPI"
+readme = "README.md"
+requires-python = ">=3.10"
+# PEP 639: an SPDX license expression, not a classifier.
+# Needs setuptools>=77 or hatchling>=1.27. Do NOT also add a
+# "License :: OSI Approved :: ..." classifier -- those are deprecated.
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Abolfazl Shahbazi", email = "ashahba@example.com" }]
+keywords = ["hello world", "packaging", "pypi", "tutorial"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Build Tools",
+]
+# Runtime requirements go here. This package deliberately has none.
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/ashahba/hello-world-pypi"
+Source = "https://github.com/ashahba/hello-world-pypi"
+Issues = "https://github.com/ashahba/hello-world-pypi/issues"
+
+[project.scripts]
+# Installs a `hello-world` command on PATH (the modern spelling of
+# entry_points={'console_scripts': [...]}).
+hello-world = "hello_world.cli:main"
+
+# Extra dependency groups for humans and CI: `pip install -e ".[test]"`
+[project.optional-dependencies]
+test = ["pytest>=8"]
+dev = ["hello-world-pypi[test]", "build>=1.2", "twine>=6", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+# Explicit is better than auto-discovery, and required for src/ layout.
+packages = ["src/hello_world"]
+
+[tool.hatch.build.targets.sdist]
+# The sdist should contain everything needed to rebuild and test the project.
+include = ["src", "tests", "README.md", "LICENSE", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
