@@ -199,15 +199,19 @@ index-servers =
     testpypi
 
 [pypi]
-repository = https://upload.pypi.org/legacy/
 username = __token__
 password = pypi-AgEIcHlwaS5vcmc...
 
 [testpypi]
-repository = https://test.pypi.org/legacy/
 username = __token__
 password = pypi-AgENdGVzdC5weXBpLm9yZw...
 ```
+
+No `repository =` lines are needed: `pypi` and `testpypi` are names twine knows, and it fills in
+the URLs (`https://upload.pypi.org/legacy/` and `https://test.pypi.org/legacy/`). If you see those
+URLs elsewhere, don't be put off by the word *legacy* — it refers to the upload **protocol** the
+endpoint emulates, not to the endpoint being deprecated. It is PyPI's current, and only, upload
+endpoint.
 
 In CI, pass it by environment variable instead of a file:
 

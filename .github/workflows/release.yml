@@ -43,6 +43,9 @@ jobs:
           path: dist/
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
+          # The action defaults to PyPI; TestPyPI has no alias, so give its URL.
+          # "/legacy/" is PyPI's current upload endpoint -- the name refers to the
+          # upload protocol it emulates, not to deprecation.
           repository-url: https://test.pypi.org/legacy/
           skip-existing: true
 
